@@ -16,12 +16,16 @@ public class Client {
         for(MyService service : serviceLoader){
             /* reflection */
             Class<?> clazz = service.getClass();
-            System.out.println("Type of our service is " + clazz.getName());
-/*
-            Field msg = clazz.getDeclaredField("message");
-            msg.setAccessible(true); // campo private message lo hacemos accesible
-            msg.set(null, "007 says hello");
-*/
+            try{
+                System.out.println("Type of our service is " + clazz.getName());
+                System.out.println("message field found, altering data...");
+                Field msg = clazz.getDeclaredField("message");
+                msg.setAccessible(true); // campo private message lo hacemos accesible
+                msg.set(null, "007 says hello");
+            }catch (NoSuchFieldException nfe){
+                System.out.println("No message field in the service");
+            }
+
             System.out.println(service.getMessage());
         }
     }
