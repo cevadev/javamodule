@@ -1,0 +1,3 @@
+module MainModule {
+    requires support;
+}
