@@ -1,0 +1,49 @@
+// compilar modulo: tener en cuenta que esta compilacion que realizo en el terminal de IDE Intellij Idea
+// En el teminal gitbash donde se usa / para indicar carpetas
+javac 
+	-d monitor.observer\target\classes 
+	monitor.observer\src\main\java\module-info.java  
+	monitor.observer\src\main\java\monitor\observer\*.java
+
+// crear archivo jar de los modulos
+jar --create --file mods\monitor.observer.jar -C monitor.observer\target\classes .
+
+// compilar modulo con dependencia a otro modulo
+javac 
+	--module-path mods 
+	-d monitor.observer.alpha\target\classes 
+	monitor.observer.alpha\src\main\java\module-info.java 
+	monitor.observer.alpha\src\main\java\monitor\observer\alpha\*.java
+
+// crear archivo jar de los modulos
+jar --create --file mods\monitor.observer.alpha.jar -C monitor.observer.alpha\target\classes .
+
+// el modulo statistics es similar
+// el modulo persistence es similar
+
+// el modulo monitor.rest utiliza bibliotecas de terceros, por lo que hay que indicar su ubicacion
+javac 
+	--module-path "mods;libs" 
+	-d monitor.rest\target\classes 
+	monitor.rest\src\main\java\module-info.java 
+	monitor.rest\src\main\java\monitor\rest\*.java
+
+// crear archivo jat del modulo monitor.rest
+jar --create --file mods\monitor.rest.jar -C monitor.rest\target\classes . 
+
+// el modulo Monitor es similar
+javac 
+	--module-path mods 
+	-d monitor\target\classes 
+	monitor\src\main\java\module-info.java 
+	monitor\src\main\java\monitor\*.java
+
+// crear el archivo jar del modulo Monitor
+jar --create --file mods\monitor.jar -C monitor\target\classes .
+
+// ejecutando la aplicacion Monitor: tener en cuenta al momento de llamar al metodo main de la clase Main
+// se utiliza / 
+java --module-path "mods;libs" -m  monitor/monitor.Main 
+
+
+
